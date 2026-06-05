@@ -7,44 +7,60 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header class="appHeader">
-    <div class="brandLockup">
-      <div class="brandMark" aria-hidden="true">MW</div>
-      <div>
-        <p class="eyebrow">Minimalist Wine</p>
-        <h1>Xero Remittance Processor</h1>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="sidebarInner">
+        <div class="brand">
+          <div class="brandMark" aria-hidden="true">MW</div>
+          <div>
+            <h1>Minimalist Wine</h1>
+            <p>Cellar finance ops</p>
+          </div>
+        </div>
+        <nav class="nav" aria-label="App sections">
+          <div class="navGroup">
+            <span class="navLabel">Workspace</span>
+            <button class="active" type="button">Remittances</button>
+            <button type="button">Xero invoices</button>
+            <button type="button">Finance charges</button>
+          </div>
+          <div class="navGroup">
+            <span class="navLabel">Wine business</span>
+            <button type="button">Vintage lots</button>
+            <button type="button">Bottling runs</button>
+            <button type="button">Customer accounts</button>
+          </div>
+        </nav>
+        <p class="sidebarStatus">Review-only posting mode</p>
       </div>
-    </div>
-    <div class="headerActions">
-      <p id="connectionSummary">Checking Xero connection...</p>
-      <a class="button primary" href="/auth/login">Connect Xero</a>
-    </div>
-  </header>
+    </aside>
 
-  <main>
-    <section class="statusStrip" aria-label="Workflow status">
-      <div class="statusItem">
-        <span class="statusDot"></span>
+    <main class="main">
+      <header class="pageHeader">
         <div>
-          <strong>Xero Setup</strong>
-          <span id="setupStatusText">Checking</span>
+          <p class="breadcrumb">Finance / Trade finance remittances</p>
+          <h2>Xero Remittance Processor</h2>
         </div>
-      </div>
-      <div class="statusItem">
-        <span class="statusDot neutral"></span>
-        <div>
-          <strong>Organisation</strong>
-          <span id="organisationStatusText">Not connected</span>
+        <div class="headerActions">
+          <p id="connectionSummary">Checking Xero connection...</p>
+          <a class="button primary" href="/auth/login">Connect Xero</a>
         </div>
-      </div>
-      <div class="statusItem">
-        <span class="statusDot neutral"></span>
-        <div>
-          <strong>Remittance</strong>
-          <span id="remittanceStatusText">Waiting for file</span>
+      </header>
+
+      <section class="statusStrip" aria-label="Workflow status">
+        <div class="statusItem">
+          <small>Xero Setup</small>
+          <strong id="setupStatusText">Checking</strong>
         </div>
-      </div>
-    </section>
+        <div class="statusItem">
+          <small>Organisation</small>
+          <strong id="organisationStatusText">Not connected</strong>
+        </div>
+        <div class="statusItem">
+          <small>Remittance</small>
+          <strong id="remittanceStatusText">Waiting for file</strong>
+        </div>
+      </section>
 
     <section class="panel" id="setupPanel">
       <div class="sectionHeader">
@@ -142,7 +158,8 @@
         </table>
       </div>
     </section>
-  </main>
+    </main>
+  </div>
 
   <script src="/app.js"></script>
 </body>
