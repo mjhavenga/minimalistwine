@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xero Remittance Processor</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Xero Remittance Processor</h1>
+      <p id="connectionSummary">Checking Xero connection...</p>
+    </div>
+    <a class="button primary" href="/auth/login">Connect Xero</a>
+  </header>
+
+  <main>
+    <section class="panel" id="setupPanel">
+      <div class="sectionHeader">
+        <h2>Xero Setup</h2>
+        <span class="badge" id="setupBadge">Required</span>
+      </div>
+      <form id="configForm" class="grid two">
+        <label>
+          Client ID
+          <input name="clientId" autocomplete="off" required>
+        </label>
+        <label>
+          Client Secret
+          <input name="clientSecret" type="password" autocomplete="off" required>
+        </label>
+        <label class="wide">
+          Redirect URI
+          <input name="redirectUri" id="redirectUri">
+        </label>
+        <button class="button" type="submit">Save Xero Setup</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="sectionHeader">
+        <h2>Organisation</h2>
+        <span class="badge" id="tenantBadge">Not connected</span>
+      </div>
+      <div id="tenantPicker" class="tenantPicker"></div>
+    </section>
+
+    <section class="panel">
+      <div class="sectionHeader">
+        <h2>Remittance</h2>
+        <span class="badge">Read-only</span>
+      </div>
+      <div class="grid two">
+        <label>
+          Remittance file
+          <input id="fileInput" type="file" accept=".pdf,.csv,.txt,.rem,.dat">
+        </label>
+        <label>
+          Invoice number patterns
+          <input id="patternsInput" value="\b(INV[-\s]?[A-Z0-9-]+)\b, \b([A-Z]{2,5}\d{4,})\b, \b(\d{5,})\b">
+        </label>
+      </div>
+      <div class="actions">
+        <button class="button" id="previewButton" type="button">Preview Remittance</button>
+        <button class="button primary" id="reconcileButton" type="button" disabled>Match Against Xero</button>
+        <button class="button" id="exportButton" type="button" disabled>Export CSV</button>
+      </div>
+      <p class="muted" id="remittanceNote">Upload an AAF trade-finance PDF, CSV, or plain-text remittance. Matching is review-only until posting rules are confirmed.</p>
+    </section>
+
+    <section class="panel resultsPanel">
+      <div class="sectionHeader">
+        <h2>Results</h2>
+        <span class="badge" id="resultBadge">Waiting</span>
+      </div>
+      <div id="summary" class="summary"></div>
+      <div class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Row</th>
+              <th>Invoice</th>
+              <th>Payment</th>
+              <th>Outstanding</th>
+              <th>Finance CN</th>
+              <th>Proceeds</th>
+              <th>Status</th>
+              <th>Variance</th>
+              <th>Xero invoice</th>
+              <th>Contact</th>
+              <th>Amount due</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody">
+            <tr><td colspan="11" class="empty">No remittance loaded yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

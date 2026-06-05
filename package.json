@@ -1,0 +1,9 @@
+{
+  "name": "xero-remittance-processor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  }
+}

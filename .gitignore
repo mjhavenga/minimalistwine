@@ -1,0 +1,6 @@
+.env
+.xero-config.json
+data/
+*.log
+.server*.id
+.server.pid
