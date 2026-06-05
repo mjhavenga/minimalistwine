@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: minimalistwine
+    runtime: node
+    plan: free
+    buildCommand: npm install && python3 -m pip install --user -r requirements.txt
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: PORT
+        value: 10000

@@ -307,7 +307,7 @@ function pythonExecutable() {
   const bundled = "C:\\Users\\marti\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe";
   if (process.env.PDF_PYTHON_PATH) return process.env.PDF_PYTHON_PATH;
   if (fs.existsSync(bundled)) return bundled;
-  return "python";
+  return process.platform === "win32" ? "python" : "python3";
 }
 
 function execFile(command, args) {
