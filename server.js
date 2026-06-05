@@ -26,7 +26,8 @@ const SCOPES = [
   "accounting.payments",
   "accounting.banktransactions",
   "accounting.contacts",
-  "accounting.settings"
+  "accounting.settings",
+  "accounting.attachments"
 ].join(" ");
 
 let pendingState = null;

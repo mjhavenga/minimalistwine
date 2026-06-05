@@ -15,3 +15,11 @@ Add the Xero app credentials in the web UI or as environment variables:
 - `XERO_CLIENT_ID`
 - `XERO_CLIENT_SECRET`
 - `XERO_REDIRECT_URI`
+
+The app requests write-capable Xero scopes for the remittance workflow:
+
+- `accounting.invoices` for invoices and finance-charge credit notes
+- `accounting.payments` for split or partial payments
+- `accounting.banktransactions` for bank matching support
+- `accounting.contacts` and `accounting.settings` for lookup/setup data
+- `accounting.attachments` for attaching remittance PDFs later
