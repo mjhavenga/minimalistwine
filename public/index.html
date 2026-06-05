@@ -7,19 +7,52 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header class="topbar">
-    <div>
-      <h1>Xero Remittance Processor</h1>
-      <p id="connectionSummary">Checking Xero connection...</p>
+  <header class="appHeader">
+    <div class="brandLockup">
+      <div class="brandMark" aria-hidden="true">MW</div>
+      <div>
+        <p class="eyebrow">Minimalist Wine</p>
+        <h1>Xero Remittance Processor</h1>
+      </div>
     </div>
-    <a class="button primary" href="/auth/login">Connect Xero</a>
+    <div class="headerActions">
+      <p id="connectionSummary">Checking Xero connection...</p>
+      <a class="button primary" href="/auth/login">Connect Xero</a>
+    </div>
   </header>
 
   <main>
+    <section class="statusStrip" aria-label="Workflow status">
+      <div class="statusItem">
+        <span class="statusDot"></span>
+        <div>
+          <strong>Xero Setup</strong>
+          <span id="setupStatusText">Checking</span>
+        </div>
+      </div>
+      <div class="statusItem">
+        <span class="statusDot neutral"></span>
+        <div>
+          <strong>Organisation</strong>
+          <span id="organisationStatusText">Not connected</span>
+        </div>
+      </div>
+      <div class="statusItem">
+        <span class="statusDot neutral"></span>
+        <div>
+          <strong>Remittance</strong>
+          <span id="remittanceStatusText">Waiting for file</span>
+        </div>
+      </div>
+    </section>
+
     <section class="panel" id="setupPanel">
       <div class="sectionHeader">
-        <h2>Xero Setup</h2>
-        <span class="badge" id="setupBadge">Required</span>
+        <div>
+          <p class="sectionKicker">Connection</p>
+          <h2>Xero Setup</h2>
+        </div>
+        <span class="badge warning" id="setupBadge">Required</span>
       </div>
       <form id="configForm" class="grid two">
         <label>
@@ -34,13 +67,16 @@
           Redirect URI
           <input name="redirectUri" id="redirectUri">
         </label>
-        <button class="button" type="submit">Save Xero Setup</button>
+        <button class="button" type="submit">Save Setup</button>
       </form>
     </section>
 
     <section class="panel">
       <div class="sectionHeader">
-        <h2>Organisation</h2>
+        <div>
+          <p class="sectionKicker">Tenant</p>
+          <h2>Organisation</h2>
+        </div>
         <span class="badge" id="tenantBadge">Not connected</span>
       </div>
       <div id="tenantPicker" class="tenantPicker"></div>
@@ -48,13 +84,18 @@
 
     <section class="panel">
       <div class="sectionHeader">
-        <h2>Remittance</h2>
-        <span class="badge">Read-only</span>
+        <div>
+          <p class="sectionKicker">Upload</p>
+          <h2>Remittance</h2>
+        </div>
+        <span class="badge info">Review-only</span>
       </div>
       <div class="grid two">
-        <label>
-          Remittance file
+        <label class="fileDrop">
+          <span>Remittance file</span>
           <input id="fileInput" type="file" accept=".pdf,.csv,.txt,.rem,.dat">
+          <strong id="fileNameText">Choose an AAF PDF or CSV</strong>
+          <small>PDF, CSV, TXT, REM, or DAT</small>
         </label>
         <label>
           Invoice number patterns
@@ -71,7 +112,10 @@
 
     <section class="panel resultsPanel">
       <div class="sectionHeader">
-        <h2>Results</h2>
+        <div>
+          <p class="sectionKicker">Review</p>
+          <h2>Results</h2>
+        </div>
         <span class="badge" id="resultBadge">Waiting</span>
       </div>
       <div id="summary" class="summary"></div>

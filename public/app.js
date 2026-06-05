@@ -8,11 +8,15 @@ const els = {
   connectionSummary: document.querySelector("#connectionSummary"),
   setupPanel: document.querySelector("#setupPanel"),
   setupBadge: document.querySelector("#setupBadge"),
+  setupStatusText: document.querySelector("#setupStatusText"),
+  organisationStatusText: document.querySelector("#organisationStatusText"),
+  remittanceStatusText: document.querySelector("#remittanceStatusText"),
   configForm: document.querySelector("#configForm"),
   redirectUri: document.querySelector("#redirectUri"),
   tenantBadge: document.querySelector("#tenantBadge"),
   tenantPicker: document.querySelector("#tenantPicker"),
   fileInput: document.querySelector("#fileInput"),
+  fileNameText: document.querySelector("#fileNameText"),
   patternsInput: document.querySelector("#patternsInput"),
   previewButton: document.querySelector("#previewButton"),
   reconcileButton: document.querySelector("#reconcileButton"),
@@ -46,6 +50,11 @@ function renderStatus() {
   els.redirectUri.value = status.redirectUri;
   els.setupPanel.style.display = status.configured ? "none" : "block";
   els.setupBadge.textContent = status.configured ? "Saved" : "Required";
+  els.setupBadge.className = status.configured ? "badge" : "badge warning";
+  els.setupStatusText.textContent = status.configured ? "Ready" : "Setup required";
+  els.organisationStatusText.textContent = status.connected && status.activeTenant
+    ? status.activeTenant.tenantName
+    : "Not connected";
 
   if (!status.configured) {
     els.connectionSummary.textContent = "Add Xero app credentials first, then connect the organisation.";
@@ -57,6 +66,7 @@ function renderStatus() {
   }
 
   els.tenantBadge.textContent = status.connected ? "Connected" : "Not connected";
+  els.tenantBadge.className = status.connected ? "badge" : "badge warning";
   if (!status.tenants.length) {
     els.tenantPicker.innerHTML = "<p class=\"muted\">No Xero organisations connected yet.</p>";
     return;
@@ -78,6 +88,12 @@ function renderStatus() {
     els.tenantPicker.appendChild(button);
   }
 }
+
+els.fileInput.addEventListener("change", () => {
+  const file = els.fileInput.files[0];
+  els.fileNameText.textContent = file ? file.name : "Choose an AAF PDF or CSV";
+  els.remittanceStatusText.textContent = file ? "File selected" : "Waiting for file";
+});
 
 function renderRows(rows, reconcile = false) {
   if (!rows.length) {
@@ -206,6 +222,7 @@ els.previewButton.addEventListener("click", async () => {
     state.reconcileOutput = null;
     els.reconcileButton.disabled = !parsed.rows.length;
     els.exportButton.disabled = true;
+    els.remittanceStatusText.textContent = parsed.rows.length ? "Parsed" : "No rows detected";
     els.remittanceNote.textContent = parsed.warnings.length
       ? parsed.warnings.join(" ")
       : `${parsed.rows.length} remittance row detected${parsed.parser ? ` by ${parsed.parser}` : ""}.`;
@@ -228,6 +245,7 @@ els.reconcileButton.addEventListener("click", async () => {
     state.reconcileOutput = output;
     els.exportButton.disabled = !output.results.length;
     els.resultBadge.textContent = "Matched";
+    els.remittanceStatusText.textContent = output.results.length ? "Matched" : "No matches";
     renderSummary(output.summary);
     renderRows(output.results, true);
   } catch (error) {
